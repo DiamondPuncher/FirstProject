@@ -13,6 +13,9 @@ public class EnemyAI : MonoBehaviour
     float chaseTriggerDistance = 5.0f;
     [SerializeField]
     Boolean returnHome = true;
+    [SerializeField]
+    float hesitate = 2f;
+    float hesitateTimer = 0;
     Vector3 home;
 
     // Start is called before the first frame update
@@ -36,12 +39,19 @@ public class EnemyAI : MonoBehaviour
             //move in the direction of the player
             chaseDir.Normalize();
             GetComponent<Rigidbody2D>().velocity = chaseDir * chaseSpeed;
+            hesitateTimer = 0;
         }
         else if(returnHome && homeDir.magnitude > 0.2f)
         {
-            //return home
-            homeDir.Normalize();
-            GetComponent<Rigidbody2D>().velocity = homeDir * chaseSpeed;
+            hesitateTimer += Time.deltaTime;
+            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            if (hesitateTimer > hesitate)
+            {
+                //return home
+                homeDir.Normalize();
+                GetComponent<Rigidbody2D>().velocity = homeDir * chaseSpeed;
+            }
+
         }
         else
         {

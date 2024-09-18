@@ -11,12 +11,18 @@ public class PlayerShoot : MonoBehaviour
     float bulletSpeed = 10f;
     [SerializeField]
     float bulletDrop = 5.0f;
+    [SerializeField]
+    float fireRate = 0.5f;
+    float timer = 0;
 
     void Update()
     {
+
+        timer += Time.deltaTime;
         //IF we press "the shoot button" (left mouse?)
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && timer > fireRate && Time.timeScale != 0)
         {
+            timer = 0;
             //fire a projectile in a straight line in the direction of the mouse
             Vector3 mousePos = Input.mousePosition;
             mousePos = Camera.main.ScreenToWorldPoint(mousePos);
