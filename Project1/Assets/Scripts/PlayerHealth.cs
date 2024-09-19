@@ -15,6 +15,11 @@ public class PlayerHealth : MonoBehaviour
     Image healthBar;
     float healthDrain = 0.5f;
     float healthTimer = 0;
+    [SerializeField]
+    float regenSpeed = 2f;
+    [SerializeField]
+    float regenAmount = 2f;
+    float regenTimer;
     // Start is called before the first frame update
 
     void Start()
@@ -27,6 +32,13 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         healthTimer += Time.deltaTime;
+        regenTimer += Time.deltaTime;
+        if (regenTimer > regenSpeed)
+        {
+            regenTimer = 0;
+            health += regenAmount;
+            healthBar.fillAmount = health / maxHealth;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -47,6 +59,20 @@ public class PlayerHealth : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 //SceneManager.LoadScene(levelToLoad);
             }
+            else if (collision.gameObject.tag == "Enemy" && healthTimer > healthDrain)
+            {
+                //health = health - 1;
+                health -= 1;
+                healthBar.fillAmount = health / maxHealth;
+                healthTimer = 0;
+                //consequences for taking too much damage
+                //IF we take enough damage to bring health to 0, reload level
+                if (health <= 0)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    //SceneManager.LoadScene(levelToLoad);
+                }
+            }
         }
     }
 
@@ -65,7 +91,20 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision) 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "EnemyBullet")
+        {
+            health -= 5;
+            healthBar.fillAmount = health / maxHealth;
+            if (health <= 0)
+            {
+                SceneManager.LoadScene(levelToLoad);
+                //SceneManager.LoadScene(levelToLoad);
+            }
+        }
+    }
+    void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
@@ -78,4 +117,6 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
+
+    
 }
