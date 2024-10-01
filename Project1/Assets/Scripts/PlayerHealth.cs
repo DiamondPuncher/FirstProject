@@ -25,7 +25,6 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         maxHealth = health;
-        healthBar.fillAmount = health / maxHealth;
     }
 
     // Update is called once per frame
@@ -50,7 +49,6 @@ public class PlayerHealth : MonoBehaviour
         {
             //health = health - 1;
             health -= 1;
-            healthBar.fillAmount = health / maxHealth;
             healthTimer = 0;
             //consequences for taking too much damage
             //IF we take enough damage to bring health to 0, reload level
@@ -63,7 +61,6 @@ public class PlayerHealth : MonoBehaviour
             {
                 //health = health - 1;
                 health -= 1;
-                healthBar.fillAmount = health / maxHealth;
                 healthTimer = 0;
                 //consequences for taking too much damage
                 //IF we take enough damage to bring health to 0, reload level
@@ -81,7 +78,6 @@ public class PlayerHealth : MonoBehaviour
         if (collision.gameObject.tag == "Enemy" && healthTimer > healthDrain)
         {
             health -= 1;
-            healthBar.fillAmount = health / maxHealth;
             healthTimer = 0;
             if (health <= 0)
             {
@@ -96,7 +92,6 @@ public class PlayerHealth : MonoBehaviour
         if (collision.gameObject.tag == "EnemyBullet")
         {
             health -= 5;
-            healthBar.fillAmount = health / maxHealth;
             if (health <= 0)
             {
                 SceneManager.LoadScene(levelToLoad);

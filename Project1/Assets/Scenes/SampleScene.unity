@@ -158,9 +158,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171a9e217ad4127408daabd84df9e0de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 500
   levelToLoad: SampleScene
   healthBar: {fileID: 437990865}
+  regenSpeed: 2
+  regenAmount: 2
 --- !u!50 &179732333
 Rigidbody2D:
   serializedVersion: 4
@@ -361,9 +363,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5653560275791304172, guid: 45bd24163ec59ab45969d181b94d58fc, type: 3}
-  bulletSpeed: 10
-  bulletDrop: 2
-  fireRate: 0.5
+  bulletSpeed: 5
+  bulletDrop: 20
+  fireRate: 0.2
 --- !u!1 &335095887
 GameObject:
   m_ObjectHideFlags: 0
@@ -10153,7 +10155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8228904597622778780, guid: ee613febda34ce24bb5f407848816f86, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
