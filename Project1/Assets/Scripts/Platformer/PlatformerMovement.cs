@@ -10,10 +10,14 @@ public class PlatformerMovement : MonoBehaviour
     float jumpSpeed = 2.0f;
     Rigidbody2D rb;
     bool grounded = false;
+    Animator anim;
+    SpriteRenderer spRe;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        spRe = GetComponent<SpriteRenderer>();
     }
 
     
@@ -29,6 +33,18 @@ public class PlatformerMovement : MonoBehaviour
         {
             rb.AddForce(new Vector2(0, 100 * jumpSpeed));
             grounded = false;
+        }
+        anim.SetBool("grounded", grounded);
+        anim.SetFloat("y", velocity.y);
+        int x = (int)Input.GetAxisRaw("Horizontal");
+        anim.SetInteger("x", x);
+        if (x <0)
+        {
+            spRe.flipX = true;
+        }
+        else if (x > 0)
+        {
+            spRe.flipX = false;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
